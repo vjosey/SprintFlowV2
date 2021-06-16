@@ -1,0 +1,66 @@
+<!--Button-->
+<a class="nav-link" (click)="open(content)">
+  <i class="ni ni-fat-add"></i> Add Sprint
+</a>
+
+<ng-template #content let-c="close" let-d="dismiss">
+  <!-- Header -->
+  <div class="modal-header">
+    <h2 class="modal-title" id="modal-basic-title">New Sprint</h2>
+    <button
+      type="button"
+      class="close"
+      aria-label="Close"
+      (click)="d('Cross click')"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <!-- Form -->
+
+    <!-- Timeblock-->
+    <div class="input-daterange datepicker row align-items-center">
+      <ngb-datepicker
+        #dp
+        (select)="onDateSelection($event)"
+        [displayMonths]="2"
+        [dayTemplate]="t"
+      >
+      </ngb-datepicker>
+      <ng-template #t let-date let-focused="focused">
+        <span
+          class="custom-day"
+          [class.focused]="focused"
+          [class.range]="isRange(date)"
+          [class.faded]="isHovered(date) || isInside(date)"
+          [class.range-start]="
+            date &&
+            fromDate &&
+            date.day === fromDate.day &&
+            date.month === fromDate.month
+          "
+          [class.range-end]="
+            date &&
+            toDate &&
+            date.day === toDate.day &&
+            date.month === toDate.month
+          "
+          (mouseenter)="hoveredDate = date"
+          (mouseleave)="hoveredDate = null"
+        >
+          {{ date.day }}
+        </span>
+      </ng-template>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button
+      type="button"
+      class="btn btn-outline-dark"
+      (click)="c('Save click')"
+    >
+      Save
+    </button>
+  </div>
+</ng-template>
